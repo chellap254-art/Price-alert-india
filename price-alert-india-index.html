@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Price Alert India</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#f3f6fa;color:#172033}header{background:#12314b;color:white;padding:22px}main{max-width:850px;margin:auto;padding:16px}.card{background:white;padding:16px;border-radius:12px;margin:0 0 16px;box-shadow:0 2px 12px #0001}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{display:block;font-weight:bold;margin:8px 0 4px}input,select,button{box-sizing:border-box;width:100%;padding:11px;border:1px solid #ccd5df;border-radius:8px;font:inherit}button{background:#087f5b;color:white;border:0;font-weight:bold;margin-top:10px}button.alt{background:#e8eef4;color:#12314b}.status{padding:10px;background:#edf5ff;border-radius:8px;overflow-wrap:anywhere}.error{background:#ffeded;color:#9b1c1c}.item{border:1px solid #ddd;padding:12px;border-radius:10px;margin-top:10px}.muted{color:#68778a;font-size:.9rem}.hidden{display:none!important}@media(max-width:600px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><h1>Price Alert India</h1><p>Track products and save price history</p></header><main>
+<div id="status" class="status">Set your Supabase Project URL and Publishable Key in this file first.</div>
+<section class="card"><h2>Account</h2><div class="grid"><div><label>Email</label><input id="email" type="email" placeholder="you@example.com"></div><div><label>Password</label><input id="password" type="password" placeholder="Password"></div></div>
+<div class="grid"><button id="signin">Sign in</button><button id="signup" class="alt">Create account</button></div><button id="signout" class="alt hidden">Sign out</button></section>
+<section id="addcard" class="card hidden"><h2>Add product</h2><div class="grid">
+<div><label>Product name</label><input id="name" placeholder="Samsung phone"></div>
+<div><label>Store</label><select id="store"><option>Amazon India</option><option>Flipkart</option><option>Myntra</option><option>Croma</option><option>Reliance Digital</option><option>Tata CLiQ</option><option>Ajio</option><option>Other</option></select></div>
+<div><label>Product URL (optional)</label><input id="url" type="url" placeholder="https://..."></div>
+<div><label>Current price (₹)</label><input id="price" type="number" min="0" step=".01"></div>
+<div><label>Target price (₹)</label><input id="target" type="number" min="0" step=".01"></div></div><button id="add">Add product</button></section>
+<section id="listcard" class="card hidden"><h2>My products</h2><p class="muted">This version stores products and manually updated prices. Automatic retailer checking and WhatsApp/SMS/email alerts are not connected yet.</p><div id="list"></div></section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+const SUPABASE_URL="https://wdkyywiwvqsevpcdzkze.supabase.co/rest/v1/";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_ikyxc6KXCN5Nq6KPLgoStw_XLT8q2Z2";
+const $=id=>document.getElementById(id), status=$("status");let db=null,user=null;
+function msg(s,err=false){status.textContent=s;status.className="status"+(err?" error":"")}
+function money(v){return v==null?"Not set":new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR"}).format(Number(v))}
+if(!SUPABASE_URL.includes("PASTE_")&&!SUPABASE_PUBLISHABLE_KEY.includes("PASTE_")){
+ db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+ db.auth.getSession().then(({data})=>{user=data.session?.user||null;ui();if(user)load()});
+ db.auth.onAuthStateChange((_e,s)=>{user=s?.user||null;ui();if(user)load()});
+}
+function ui(){$("addcard").classList.toggle("hidden",!user);$("listcard").classList.toggle("hidden",!user);$("signout").classList.toggle("hidden",!user);$("signin").classList.toggle("hidden",!!user);$("signup").classList.toggle("hidden",!!user);if(user)msg("Signed in as "+user.email)}
+async function auth(mode){if(!db){msg("Setup needed: replace both Supabase placeholders in index.html.",true);return}
+const email=$("email").value.trim(),password=$("password").value;if(!email||!password){msg("Enter email and password.",true);return}
+const r=mode==="up"?await db.auth.signUp({email,password}):await db.auth.signInWithPassword({email,password});
+if(r.error){msg(r.error.message,true);return}if(mode==="up"&&!r.data.session){msg("Account created. Check your email for confirmation.");return}
+user=r.data.user||r.data.session?.user||null;ui();if(user)load()}
+$("signin").onclick=()=>auth("in");$("signup").onclick=()=>auth("up");$("signout").onclick=async()=>{await db.auth.signOut();user=null;ui();$("list").innerHTML="";msg("Signed out.")};
+$("add").onclick=async()=>{if(!user)return;const name=$("name").value.trim(),target=Number($("target").value),raw=$("price").value,price=raw===""?null:Number(raw);
+if(!name||$("target").value===""||!Number.isFinite(target)||target<0||(price!==null&&(!Number.isFinite(price)||price<0))){msg("Enter product name and valid prices.",true);return}
+const r=await db.from("tracked_products").insert({user_id:user.id,product_name:name,retailer:$("store").value,product_url:$("url").value.trim()||null,current_price:price,target_price:target}).select().single();
+if(r.error){msg(r.error.message,true);return}if(price!==null){const h=await db.from("price_history").insert({product_id:r.data.id,price});if(h.error){msg("Product saved; history insert failed. Run the policy SQL in README. "+h.error.message,true)}}
+$("name").value="";$("url").value="";$("price").value="";$("target").value="";await load();msg("Product added.")};
+async function load(){const r=await db.from("tracked_products").select("id,product_name,retailer,product_url,current_price,target_price,created_at").order("created_at",{ascending:false});if(r.error){msg(r.error.message,true);return}
+$("list").innerHTML="";if(!r.data.length){$("list").textContent="No products yet.";return}
+for(const p of r.data){const el=document.createElement("div");el.className="item";const title=document.createElement("b");title.textContent=p.product_name;el.append(title);const info=document.createElement("p");info.textContent=p.retailer+" | Current: "+money(p.current_price)+" | Target: "+money(p.target_price);el.append(info);
+if(p.current_price!==null&&Number(p.current_price)<=Number(p.target_price)){const reached=document.createElement("b");reached.textContent="Target price reached!";reached.style.color="#087f5b";el.append(reached)}
+if(p.product_url){try{const u=new URL(p.product_url);if(["http:","https:"].includes(u.protocol)){const a=document.createElement("a");a.href=u.href;a.target="_blank";a.rel="noopener noreferrer";a.textContent=" Open product";el.append(a)}}catch{}}
+const form=document.createElement("form");form.style.display="grid";form.style.gridTemplateColumns="1fr auto";form.style.gap="8px";const input=document.createElement("input");input.type="number";input.min="0";input.step=".01";input.placeholder="New current price";const b=document.createElement("button");b.textContent="Update";form.append(input,b);form.onsubmit=async e=>{e.preventDefault();if(input.value===""||Number(input.value)<0){msg("Enter a valid price.",true);return}const n=Number(input.value);const u=await db.from("tracked_products").update({current_price:n,last_checked_at:new Date().toISOString()}).eq("id",p.id);if(u.error){msg(u.error.message,true);return}const h=await db.from("price_history").insert({product_id:p.id,price:n});if(h.error){msg("Price updated, but history insert failed. Run policy SQL in README. "+h.error.message,true);return}await load();msg("Price updated and saved.")};el.append(form);
+const hb=document.createElement("button");hb.className="alt";hb.textContent="Show price history";hb.onclick=async()=>{const h=await db.from("price_history").select("price,recorded_at").eq("product_id",p.id).order("recorded_at",{ascending:false}).limit(20);if(h.error){msg(h.error.message,true);return}alert(h.data.length?h.data.map(x=>money(x.price)+" — "+new Date(x.recorded_at).toLocaleString()).join("\n"):"No history yet.")};el.append(hb);$("list").append(el)}}
+</script></body></html>
