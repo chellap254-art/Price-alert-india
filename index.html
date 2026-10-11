@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0f766e"><title>Price Alert India</title>
+<style>
+:root{--brand:#0f766e;--ink:#142033;--muted:#64748b;--line:#e2e8f0;--bg:#f4f7fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px system-ui,Arial,sans-serif}
+header{background:linear-gradient(120deg,#064e3b,#0f766e,#155e75);color:white;padding:28px 16px 38px}
+.wrap{max-width:1100px;margin:auto}.brand{display:flex;align-items:center;gap:12px}.logo{font-size:28px;background:#ffffff22;border-radius:14px;padding:10px}h1{margin:0;font-size:clamp(26px,5vw,38px)}header p{margin:6px 0 0;color:#d1fae5}
+main{max-width:1100px;margin:-20px auto 35px;padding:0 14px}.banner{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:13px 15px;font-size:14px;margin-bottom:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.stat,.card{background:white;border:1px solid var(--line);border-radius:15px;padding:17px}.stat{background:#ecfeff;border-color:#cffafe}.stat strong{display:block;font-size:23px}.stat span{font-size:12px;color:#155e75}
+.grid{display:grid;grid-template-columns:1fr 1.3fr;gap:16px}.card{box-shadow:0 8px 25px #0f172a08}h2{font-size:19px;margin:0 0 14px}.field{margin:12px 0}label{display:block;font-weight:650;font-size:13px;margin-bottom:6px}input,select{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:10px;background:white;font:inherit;color:var(--ink)}button{border:0;border-radius:10px;padding:11px 14px;background:var(--brand);color:white;font:inherit;font-weight:700;cursor:pointer}button:hover{filter:brightness(.93)}.secondary{background:#e2e8f0;color:#1e293b}.danger{background:#fee2e2;color:#991b1b}.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}.small{font-size:12px;color:var(--muted);line-height:1.5}.items{display:grid;gap:11px}.item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px;display:flex;justify-content:space-between;gap:10px}.item h3{margin:0 0 5px;font-size:16px;overflow-wrap:anywhere}.price{font-weight:800;font-size:20px;color:var(--brand)}.meta{font-size:12px;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}.pill{display:inline-block;border-radius:999px;background:#ccfbf1;color:#115e59;padding:3px 8px;font-size:11px;font-weight:700;margin-top:7px}.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed #cbd5e1;border-radius:12px}footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.item{display:block}.item .actions{margin-top:10px}.stats strong{font-size:19px}.row{gap:8px}}
+</style></head>
+<body>
+<header><div class="wrap"><div class="brand"><div class="logo">🔔</div><div><h1>Price Alert India</h1><p>Compare prices. Set your target. Buy at the right time.</p></div></div></div></header>
+<main>
+<div class="banner"><b>Starter version:</b> This website stores prices entered by you. Live automatic prices from retailers need an approved price-data API and a backend; no retailer login/password is needed here.</div>
+<div class="stats"><div class="stat"><strong id="count">0</strong><span>Tracked products</span></div><div class="stat"><strong id="hits">0</strong><span>Target reached</span></div><div class="stat"><strong id="savings">₹0</strong><span>Price drop recorded</span></div></div>
+<div class="grid">
+<section class="card"><h2>＋ Add product</h2><form id="form">
+<div class="field"><label for="name">Product name</label><input id="name" required maxlength="120" placeholder="e.g. Bluetooth headphones"></div>
+<div class="field"><label for="store">Store</label><select id="store"><option>Amazon India</option><option>Flipkart</option><option>Myntra</option><option>Croma</option><option>Reliance Digital</option><option>Tata CLiQ</option><option>Ajio</option><option>Other / future store</option></select></div>
+<div class="field"><label for="url">Product page URL (optional)</label><input id="url" type="url" placeholder="https://..."></div>
+<div class="row"><div class="field"><label for="current">Current price (₹)</label><input id="current" type="number" min="0" step=".01" required placeholder="4999"></div><div class="field"><label for="target">Target price (₹)</label><input id="target" type="number" min="0" step=".01" required placeholder="3999"></div></div>
+<button type="submit">Add to watchlist</button> <button type="button" class="secondary" id="notify">Enable alerts</button>
+<p class="small">Browser notifications require permission and browser support. This demo checks the target when you add or update a price.</p>
+</form></section>
+<section class="card"><h2>📉 My watchlist</h2><div class="field"><label for="search">Search products</label><input id="search" placeholder="Product or store name"></div><div class="items" id="list"></div></section>
+</div>
+<section class="card" style="margin-top:16px"><h2>Next: automatic price tracking</h2><p>To check prices on a schedule across many stores, the project needs a server-side price-data integration. Each store must have an approved API, affiliate feed, or other permitted data source. GitHub Pages alone cannot run a secure scheduled tracker.</p><p class="small">This starter intentionally does not scrape retailer pages or claim live prices. Never publish API keys in this repository.</p></section>
+</main><footer>Price Alert India · Independent starter project · Prices shown are user-entered, not verified live prices.</footer>
+<script>
+const KEY='pai-v2-products';let products=[];try{products=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+const $=id=>document.getElementById(id),money=n=>'₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:2});
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function validUrl(s){try{const u=new URL(s);return ['http:','https:'].includes(u.protocol)?u.href:''}catch(e){return ''}}
+function save(){localStorage.setItem(KEY,JSON.stringify(products));render()}
+function alertHit(p){if('Notification'in window&&Notification.permission==='granted')new Notification('Price Alert India',{body:`${p.name}: ${money(p.current)} (target ${money(p.target)})`})}
+function render(){const q=$('search').value.toLowerCase();const view=products.filter(p=>(p.name+' '+p.store).toLowerCase().includes(q));$('count').textContent=products.length;$('hits').textContent=products.filter(p=>p.current<=p.target).length;$('savings').textContent=money(products.reduce((a,p)=>a+Math.max(0,p.original-p.current),0));$('list').innerHTML=view.length?view.map(p=>{const hit=p.current<=p.target;const u=validUrl(p.url);return `<article class="item"><div><h3>${esc(p.name)}</h3><div class="meta">${esc(p.store)} · Target ${money(p.target)}</div><div class="price">${money(p.current)}</div><span class="pill" style="${hit?'':'background:#e2e8f0;color:#475569'}">${hit?'🎉 Target reached':'Watching price'}</span>${u?`<div class="meta"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">Open product page ↗</a></div>`:''}<div class="meta">Updated: ${esc(p.updated)}</div></div><div class="actions"><button onclick="updatePrice('${p.id}')">Update price</button> <button class="danger" onclick="removeProduct('${p.id}')">Delete</button></div></article>`}).join(''):'<div class="empty">No products yet. Add one using the form.</div>'}
+$('form').addEventListener('submit',e=>{e.preventDefault();const name=$('name').value.trim(),store=$('store').value,url=$('url').value.trim(),current=Number($('current').value),target=Number($('target').value);if(!name||current<0||target<0||!Number.isFinite(current)||!Number.isFinite(target)){alert('Enter valid product details and prices.');return}if(url&&!validUrl(url)){alert('Enter a valid http or https URL.');return}const p={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),name,store,url,current,target,original:current,updated:new Date().toLocaleString('en-IN')};products.unshift(p);save();e.target.reset();if(current<=target)alertHit(p)});
+$('notify').addEventListener('click',async()=>{if(!('Notification'in window)){alert('Notifications are not supported in this browser.');return}const r=await Notification.requestPermission();alert(r==='granted'?'Browser alerts enabled.':'Permission was not granted.')});
+$('search').addEventListener('input',render);
+window.updatePrice=id=>{const p=products.find(x=>x.id===id);if(!p)return;const raw=prompt('Enter latest price in ₹:',p.current);if(raw===null)return;const n=Number(raw);if(!Number.isFinite(n)||n<0){alert('Enter a valid price.');return}const old=p.current;p.current=n;p.updated=new Date().toLocaleString('en-IN');save();if(n<=p.target&&old>p.target)alertHit(p)};
+window.removeProduct=id=>{if(confirm('Delete this product?')){products=products.filter(p=>p.id!==id);save()}};render();
+</script></body></html>
