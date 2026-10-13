@@ -113,13 +113,12 @@
       .from("products")
       .select("*");
 
-    if (error) {
-      status.textContent =
-        "பொருட்களை ஏற்ற முடியவில்லை. Supabase அமைப்பைச் சரிபார்க்கவும்.";
-      console.error(error);
-      return;
-    }
-
+    
+if (error) {
+  status.textContent = "பிழை: " + error.message;
+  console.error(error);
+  return;
+}
     allProducts = data || [];
     displayProducts(allProducts);
 
