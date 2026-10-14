@@ -75,6 +75,131 @@
       padding: 12px;
     }
   </style>
+  <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+h1 {
+  text-align: center;
+  color: #0f766e;
+  font-size: 30px;
+}
+
+h2 {
+  color: #0f766e;
+}
+
+#search,
+#productForm input {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 16px;
+  background: white;
+}
+
+#productForm {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px #00000010;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  background: #0f766e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #115e59;
+}
+
+#products {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  max-width: 1100px;
+  margin: 25px auto;
+}
+
+.card {
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px #00000010;
+  border: 1px solid #e2e8f0;
+}
+
+.card h3 {
+  color: #0f766e;
+  font-size: 20px;
+}
+
+.price {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.card a {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  margin-top: 12px;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 9px;
+}
+
+.card a:hover {
+  background: #1d4ed8;
+}
+
+.low {
+  padding: 12px;
+  background: #dcfce7;
+  color: #166534;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+#status {
+  text-align: center;
+  margin: 15px;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+}
+</style>
 </head>
 
 <body>
