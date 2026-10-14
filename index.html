@@ -179,10 +179,10 @@ if (error) {
 
       card.append(name, price);
 
-      if (product.url) {
+      if (product.product_url) {
         try {
-          const linkUrl = new URL(product.url);
-
+          const linkUrl = new URL(product.product_url);
+          
           if (linkUrl.protocol === "https:" ||
               linkUrl.protocol === "http:") {
             const link = document.createElement("a");
