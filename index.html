@@ -90,7 +90,15 @@
   type="search"
   placeholder="பொருட்களைத் தேடுங்கள்..."
 >
+<h2>புதிய பொருளைச் சேர்க்கவும்</h2>
 
+<form id="productForm">
+  <input id="productName" placeholder="பொருளின் பெயர்" required>
+  <input id="productUrl" type="url" placeholder="பொருள் இணையதள முகவரி" required>
+  <input id="currentPrice" type="number" placeholder="தற்போதைய விலை" required>
+  <input id="targetPrice" type="number" placeholder="நீங்கள் விரும்பும் விலை" required>
+  <button type="submit">பொருளைச் சேர்க்கவும்</button>
+</form>
 <p id="status">பொருட்களை ஏற்றுகிறது...</p>
 
 <main id="products"></main>
@@ -205,7 +213,34 @@ if (error) {
     );
   });
 
-  
+  document.getElementById("productForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const status = document.getElementById("status");
+
+  const newProduct = {
+    product_name: document.getElementById("productName").value.trim(),
+    product_url: document.getElementById("productUrl").value.trim(),
+    current_price: Number(document.getElementById("currentPrice").value),
+    target_price: Number(document.getElementById("targetPrice").value)
+  };
+
+  status.textContent = "பொருளைச் சேமிக்கிறது...";
+
+  const { error } = await db
+    .from("products")
+    .insert([newProduct]);
+
+  if (error) {
+    status.textContent = "பிழை: " + error.message;
+    console.error(error);
+    return;
+  }
+
+  document.getElementById("productForm").reset();
+  await loadProducts();
+  status.textContent = "பொருள் வெற்றிகரமாகச் சேர்க்கப்பட்டது!";
+});
     
   if (
     SUPABASE_URL.startsWith("https://") &&
