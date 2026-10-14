@@ -270,7 +270,7 @@ if (error) {
       card.className = "card";
 if (product.image_url) {
   const image = document.createElement("img");
-  image.src = product.image_url;
+  image.src = product.image_url || "";
   image.alt = product.product_name || "பொருள்";
   image.style.width = "100%";
   image.style.height = "180px";
