@@ -290,20 +290,19 @@ image.style.height = "180px";
 image.style.objectFit = "contain";
 image.style.marginBottom = "12px";
 
-image.onerror = function() {
-  image.onerror = null;
-  image.src = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
+
+      image.onerror = function() {
+image.onerror = null;
 };
 
 image.src = product.image_url || "";
-  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
 
 card.appendChild(image);
 
-      const name = document.createElement("h3");
-      name.textContent = product.product_name || "பொருள்"; 
-      
-      card.appendChild(name);
+const name = document.createElement("h3");
+name.textContent = product.product_name || product.name || "பொருள்";
+
+card.appendChild(name);
       
       const price = document.createElement("p");
       price.className = "price";
