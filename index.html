@@ -300,6 +300,8 @@ image.style.height = "180px";
 image.style.objectFit = "contain";
 
 if (product.image_url) {
+ console.log("Product:", product.name || product.product_name);
+console.log("Image URL:", product.image_url);
   image.src = product.image_url;
 } else {
   image.src = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
