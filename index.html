@@ -294,10 +294,11 @@ image.style.marginBottom = "12px";
       
 image.onerror = function() {
   image.onerror = null;
-  image.style.display = "none";
+  image.src = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
 };
 
-image.src = product.image_url || "";
+image.src = product.image_url ||
+  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
 
 
 
