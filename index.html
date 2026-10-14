@@ -302,7 +302,12 @@ image.style.objectFit = "contain";
 if (product.image_url) {
  console.log("Product:", product.name || product.product_name);
 console.log("Image URL:", product.image_url);
+  const productName = (product.product_name || "").toLowerCase();
+
+if (product.image_url) {
   image.src = product.image_url;
+} else if (productName.includes("mouse")) {
+  image.src = "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400";
 } else {
   image.src = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
 }
