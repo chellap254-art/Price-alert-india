@@ -270,20 +270,23 @@ if (error) {
     products.forEach(product => {
       const card = document.createElement("article");
       card.className = "card";
-if (product.image_url) {
-  const image = document.createElement("img");
-  image.src = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
+const image = document.createElement("img");
+
+image.alt = product.product_name || "பொருள்";
+image.style.width = "100%";
+image.style.height = "180px";
+image.style.objectFit = "contain";
+image.style.marginBottom = "12px";
+
 image.onerror = function() {
-  image.alt = "படம் ஏற்ற முடியவில்லை";
-  console.log("Image URL:", product.image_url);
+  image.onerror = null;
+  image.src = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
 };
-  image.alt = product.product_name || "பொருள்";
-  image.style.width = "100%";
-  image.style.height = "180px";
-  image.style.objectFit = "contain";
-  image.style.marginBottom = "12px";
-  image.loading = "lazy";
-  card.appendChild(image);
+
+image.src = product.image_url ||
+  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
+
+card.appendChild(image);
 }
       const name = document.createElement("h3");
       name.textContent = product.product_name || "பொருள்"; 
