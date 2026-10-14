@@ -291,11 +291,16 @@ image.style.objectFit = "contain";
 image.style.marginBottom = "12px";
 
 
-      image.onerror = function() {
-image.onerror = null;
+      
+image.onerror = function() {
+  image.onerror = null;
+  image.style.display = "none";
 };
 
 image.src = product.image_url || "";
+
+
+
 
 card.appendChild(image);
 
