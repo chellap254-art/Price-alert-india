@@ -239,26 +239,50 @@ button:hover {
 
   let allProducts = [];
 
+  
   async function loadProducts() {
-    const status = document.getElementById("status");
+  const status = document.getElementById("status");
+  status.textContent = "பொருட்களை ஏற்றுகிறது...";
 
-    const { data, error } = await db
-      .from("products")
-      .select("*");
-    
-    console.log("Products:", data);
-    console.log("Image URL:", data?.map(p => p.image_url));
-    
-    
-if (error) {
-  status.textContent = "பிழை: " + error.message;
-  console.error(error);
-  return;
-}
+  try {
+    const result = await Promise.race([
+      db.from("products").select("*"),
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(new Error("இணைப்பு தாமதமாகிறது. Supabase அமைப்பைச் சரிபார்க்கவும்.")),
+          12000
+        )
+      )
+    ]);
+
+    const { data, error } = result;
+
+    if (error) {
+      status.textContent = "பிழை: " + error.message;
+      return;
+    }
+
     allProducts = data || [];
     displayProducts(allProducts);
 
     status.textContent = allProducts.length
+      ? allProducts.length + " பொருட்கள்"
+      : "இன்னும் பொருட்கள் சேர்க்கப்படவில்லை.";
+
+  } catch (error) {
+    status.textContent = "பிழை: " + error.message;
+    console.error("Products loading error:", error);
+  }
+}
+
+    
+      
+      
+    
+    
+  
+
+     status.textContent = allProducts.length
       ? allProducts.length + " பொருட்கள்"
       : "இன்னும் பொருட்கள் சேர்க்கப்படவில்லை.";
   }
