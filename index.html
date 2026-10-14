@@ -273,20 +273,8 @@ button:hover {
     status.textContent = "பிழை: " + error.message;
     console.error("Products loading error:", error);
   }
-}
-
-    
-      
-      
-    
-    
+  }                                               
   
-
-     status.textContent = allProducts.length
-      ? allProducts.length + " பொருட்கள்"
-      : "இன்னும் பொருட்கள் சேர்க்கப்படவில்லை.";
-  }
-
   function displayProducts(products) {
     const container = document.getElementById("products");
     container.replaceChildren();
