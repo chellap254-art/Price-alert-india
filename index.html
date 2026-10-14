@@ -295,7 +295,7 @@ image.onerror = function() {
   image.src = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
 };
 
-image.src = product.image_url ||
+image.src = product.image_url || "";
   "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
 
 card.appendChild(image);
