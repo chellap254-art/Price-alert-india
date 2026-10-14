@@ -100,8 +100,8 @@
   const SUPABASE_KEY = "sb_publishable_ikyxc6KXCN5Nq6KPLgoStw_XLT8q2Z2";
 
   const db = window.supabase.createClient(
-    "https://wdkyywiwvqsevpcdzkze.supabase.co";
-    "sb_publishable_ikyxc6KXCN5Nq6KPLgoStw_XLT8q2Z2";
+    SUPABASE_URL,
+    SUPABASE_KEY
   );
 
   let allProducts = [];
@@ -202,13 +202,17 @@ if (error) {
     );
   });
 
+  
+    
   if (
-    SUPABASE_URL.startsWith "https://wdkyywiwvqsevpcdzkze.supabase.co";
-    SUPABASE_KEY !== "sb_publishable_ikyxc6KXCN5Nq6KPLgoStw_XLT8q2Z2";
+    SUPABASE_URL.startsWith("https://") &&
+    SUPABASE_KEY
   ) {
     loadProducts();
   } else {
     document.getElementById("status").textContent =
-      "Supabase "https://wdkyywiwvqsevpcdzkze.supabase.co";"sb_publishable_ikyxc6KXCN5Nq6KPLgoStw_XLT8q2Z2";
+      "Supabase URL அல்லது Key-ஐ சரிபார்க்கவும்.";
+  }
+</script>
 </body>
 </html>
