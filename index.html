@@ -137,8 +137,8 @@ if (error) {
       card.className = "card";
 
       const name = document.createElement("h3");
-      name.textContent = product_name || "பொருள்";
-
+      name.textContent = product.product_name || "பொருள்"; 
+      
       card.appendChild(name);
       
       const price = document.createElement("p");
@@ -198,7 +198,7 @@ if (error) {
 
     displayProducts(
       allProducts.filter(product =>
-        String(product.name || "")
+        String(product.product_name || "")
           .toLowerCase()
           .includes(query)
       )
