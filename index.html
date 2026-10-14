@@ -112,7 +112,8 @@
     const { data, error } = await db
       .from("products")
       .select("*");
-
+    
+    console.log("Products:", data);
     
 if (error) {
   status.textContent = "பிழை: " + error.message;
