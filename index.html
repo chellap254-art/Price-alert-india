@@ -292,18 +292,26 @@ image.style.marginBottom = "12px";
 
 
       
-image.onerror = function() {
-  image.onerror = null;
+
+  
+image.alt = product.product_name || product.name || "பொருள்";
+image.style.width = "100%";
+image.style.height = "180px";
+image.style.objectFit = "contain";
+
+if (product.image_url) {
+  image.src = product.image_url;
+} else {
   image.src = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
-};
-
-image.src = product.image_url ||
-  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
-
-
-
+}
 
 card.appendChild(image);
+
+
+
+
+
+
 
 const name = document.createElement("h3");
 name.textContent = product.product_name || product.name || "பொருள்";
