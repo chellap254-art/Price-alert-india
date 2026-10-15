@@ -340,12 +340,21 @@ footer p {
   />
 
   <div class="shopping-categories">
-    <button type="button" onclick="filterCategory('all')">All</button>
-    <button type="button" onclick="filterCategory('earbuds')">Earbuds</button>
-    <button type="button" onclick="filterCategory('headphone')">Headphones</button>
-    <button type="button" onclick="filterCategory('mouse')">Mouse</button>
-    <button type="button" onclick="filterCategory('mobile')">Mobiles</button>
-  </div>
+  <button type="button" class="category active"
+    onclick="filterProducts('all', this)">All</button>
+
+  <button type="button" class="category"
+    onclick="filterProducts('earbuds', this)">Earbuds</button>
+
+  <button type="button" class="category"
+    onclick="filterProducts('headphone', this)">Headphones</button>
+
+  <button type="button" class="category"
+    onclick="filterProducts('mouse', this)">Mouse</button>
+
+  <button type="button" class="category"
+    onclick="filterProducts('mobile', this)">Mobiles</button>
+</div>
 </header>
 <header>
   <div class="topbar">
