@@ -294,9 +294,32 @@ image.style.marginBottom = "12px";
       
 
   
-image.alt = product.product_name || product.name || "பொருள்";
+} catch (error) {
+    status.textContent = "பிழை: " + error.message;
+    console.error("Products loading error:", error);
+  }
+  }                                               
+  
+  function displayProducts(products) {
+    const container = document.getElementById("products");
+    container.replaceChildren();
+
+    products.forEach(product => {
+      const card = document.createElement("article");
+      card.className = "card";
+const image = document.createElement("img");
+
+image.alt = product.product_name || "பொருள்";
 image.style.width = "100%";
 image.style.height = "180px";
+image.style.objectFit = "contain";
+image.style.marginBottom = "12px";
+
+
+      
+
+  
+
 image.style.objectFit = "contain";
 
 if (product.image_url) 
