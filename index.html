@@ -569,8 +569,12 @@ function displayProducts(products) {
     );
 
     const priceNumber = Number(currentPrice);
-    const oldPriceNumber = Number(oldPrice);
-
+    const oldPriceNumber = Number(oldPrice); 
+    
+const amazonPrice = getValue(product, ["amazon_price"]);
+const amazonUrl = getValue(product, ["amazon_url"]);
+const flipkartPrice = getValue(product, ["flipkart_price"]);
+const flipkartUrl = getValue(product, ["flipkart_url"]);
     const hasCurrentPrice =
       currentPrice !== null &&
       Number.isFinite(priceNumber);
