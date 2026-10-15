@@ -323,7 +323,30 @@ footer p {
 </head>
 
 <body>
+<header class="shopping-header">
+  <h1>🛍️ Price Alert India</h1>
 
+  <nav class="shopping-menu">
+    <a href="#home">Home</a>
+    <a href="#products">All Products</a>
+    <a href="#deals">Best Deals</a>
+  </nav>
+
+  <input
+    type="search"
+    id="searchInput"
+    placeholder="Search products..."
+    aria-label="Search products"
+  />
+
+  <div class="shopping-categories">
+    <button type="button" onclick="filterCategory('all')">All</button>
+    <button type="button" onclick="filterCategory('earbuds')">Earbuds</button>
+    <button type="button" onclick="filterCategory('headphone')">Headphones</button>
+    <button type="button" onclick="filterCategory('mouse')">Mouse</button>
+    <button type="button" onclick="filterCategory('mobile')">Mobiles</button>
+  </div>
+</header>
 <header>
   <div class="topbar">
     <div class="logo">PRICE <span>ALERT</span> INDIA</div>
