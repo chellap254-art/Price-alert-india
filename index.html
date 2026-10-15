@@ -1,202 +1,322 @@
-sb_publishable_ikyxc6KXCN5Nq6KPLgoStw_XLT8q2Z2<!DOCTYPE html>
-<html lang="ta">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Price Alert India</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>Price Alert India - Best Deals</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f3f5f9;
-      color: #222;
-    }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    header {
-      background: #075e54;
-      color: white;
-      padding: 22px 12px;
-      text-align: center;
-    }
-
-    .search {
-      width: 90%;
-      max-width: 600px;
-      margin: 20px auto;
-      display: block;
-      padding: 13px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-sizing: border-box;
-    }
-
-    #products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
-      padding: 15px;
-    }
-
-    .card {
-      background: white;
-      padding: 18px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #ddd;
-    }
-
-    .price {
-      font-size: 22px;
-      font-weight: bold;
-      color: #087443;
-    }
-
-    .low {
-      color: #d00000;
-      font-weight: bold;
-    }
-
-    a, button {
-      display: inline-block;
-      background: #075e54;
-      color: white;
-      padding: 10px 14px;
-      border: none;
-      border-radius: 6px;
-      text-decoration: none;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-
-    #status {
-      text-align: center;
-      padding: 12px;
-    }
-  </style>
-  <style>
+<style>
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  padding: 20px;
   font-family: Arial, sans-serif;
-  background: #f1f5f9;
-  color: #1e293b;
+  background: #f5f7ff;
+  color: #202344;
 }
 
-h1 {
+header {
+  background: linear-gradient(110deg, #3214a5, #762de2);
+  color: white;
+  padding: 18px 5%;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.logo span {
+  color: #ffda55;
+}
+
+nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.hero {
+  background: linear-gradient(120deg, #ff7a18, #ff3d77, #8b35e8);
+  color: white;
+  padding: 45px 7%;
   text-align: center;
-  color: #0f766e;
-  font-size: 30px;
 }
 
-h2 {
-  color: #0f766e;
+.hero h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  margin-bottom: 14px;
 }
 
-#search,
-#productForm input {
-  width: 100%;
-  padding: 13px;
-  margin: 8px 0;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  font-size: 16px;
-  background: white;
+.hero p {
+  font-size: 17px;
+  margin-bottom: 24px;
 }
 
-#productForm {
+.search-box {
+  display: flex;
   max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
+  margin: auto;
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px #00000010;
+  border-radius: 12px;
+  padding: 5px;
 }
 
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 10px;
-  background: #0f766e;
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: 13px;
+  font-size: 15px;
+}
+
+.search-box button {
+  background: #251080;
   color: white;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
+  border-radius: 8px;
+  padding: 12px 20px;
   cursor: pointer;
 }
 
-button:hover {
-  background: #115e59;
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 22px 10px;
 }
 
-#products {
+.category {
+  background: white;
+  color: #5122bc;
+  border: 1px solid #e1d5ff;
+  border-radius: 25px;
+  padding: 11px 18px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.category:hover,
+.category.active {
+  background: #5122bc;
+  color: white;
+}
+
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 15px 20px 40px;
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+
+.section-title h2 {
+  font-size: 25px;
+}
+
+.section-title p {
+  color: #777;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.products {
   display: grid;
-  grid-template-columns:
-    repeat(auto-fit, minmax(230px, 1fr));
-  gap: 18px;
-  max-width: 1100px;
-  margin: 25px auto;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 20px;
 }
 
 .card {
-  padding: 20px;
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 15px #00000010;
-  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(35, 25, 90, 0.08);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.image-area {
+  height: 185px;
+  background: linear-gradient(135deg, #f0eaff, #ffe9f0);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.discount {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #ff3867;
+  color: white;
+  padding: 6px 9px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 16px;
 }
 
 .card h3 {
-  color: #0f766e;
-  font-size: 20px;
+  font-size: 17px;
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
 }
 
 .price {
-  font-size: 19px;
+  font-size: 23px;
+  font-weight: bold;
+  color: #3513a5;
+}
+
+.old-price {
+  color: #888;
+  text-decoration: line-through;
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+.saving {
+  color: #07874e;
+  font-size: 13px;
+  margin-top: 9px;
   font-weight: bold;
 }
 
-.card a {
+.target {
+  font-size: 12px;
+  color: #777;
+  margin-top: 8px;
+}
+
+.buy-button {
   display: block;
   text-align: center;
-  padding: 12px;
-  margin-top: 12px;
-  background: #2563eb;
+  background: linear-gradient(90deg, #6324dc, #9b36ef);
   color: white;
-  text-decoration: none;
-  border-radius: 9px;
-}
-
-.card a:hover {
-  background: #1d4ed8;
-}
-
-.low {
   padding: 12px;
-  background: #dcfce7;
-  color: #166534;
-  border-radius: 8px;
+  border-radius: 9px;
+  margin-top: 15px;
+  text-decoration: none;
   font-weight: bold;
 }
 
-#status {
-  text-align: center;
-  margin: 15px;
+.buy-button:hover {
+  background: #3214a5;
 }
 
-@media (max-width: 480px) {
-  body {
+.status {
+  text-align: center;
+  padding: 30px 15px;
+  color: #62548a;
+  line-height: 1.8;
+}
+
+footer {
+  background: #201052;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+  line-height: 1.8;
+}
+
+footer p {
+  font-size: 13px;
+  color: #ddd3ff;
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 16px;
+  }
+
+  .topbar {
+    justify-content: center;
+  }
+
+  nav {
+    justify-content: center;
+  }
+
+  .hero {
+    padding: 35px 16px;
+  }
+
+  main {
     padding: 12px;
   }
 
-  h1 {
-    font-size: 25px;
+  .products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .image-area {
+    height: 140px;
+  }
+
+  .card-body {
+    padding: 11px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+  }
+
+  .price {
+    font-size: 18px;
+  }
+
+  .old-price {
+    font-size: 12px;
+    margin-left: 0;
+  }
+
+  .buy-button {
+    font-size: 13px;
+    padding: 10px 5px;
   }
 }
 </style>
@@ -205,259 +325,407 @@ button:hover {
 <body>
 
 <header>
-  <h1>🛍️ Price Alert India</h1>
-  <p>பொருட்களின் விலைகளை ஒப்பிட்டு சேமியுங்கள்!</p>
+  <div class="topbar">
+    <div class="logo">PRICE <span>ALERT</span> INDIA</div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#deals">Best Deals</a>
+    </nav>
+  </div>
 </header>
 
-<input
-  id="search"
-  class="search"
-  type="search"
-  placeholder="பொருட்களைத் தேடுங்கள்..."
->
-<h2>புதிய பொருளைச் சேர்க்கவும்</h2>
+<section class="hero" id="home">
+  <h1>Find the Best Price. Save More!</h1>
+  <p>Compare prices, discover deals and shop smarter.</p>
 
-<form id="productForm">
-  <input id="productName" placeholder="பொருளின் பெயர்" required>
-  <input id="productUrl" type="url" placeholder="பொருள் இணையதள முகவரி" required>
-  <input id="currentPrice" type="number" placeholder="தற்போதைய விலை" required>
-  <input id="targetPrice" type="number" placeholder="நீங்கள் விரும்பும் விலை" required>
-  <button type="submit">பொருளைச் சேர்க்கவும்</button>
-</form>
-<p id="status">பொருட்களை ஏற்றுகிறது...</p>
+  <div class="search-box">
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="Search products..."
+      aria-label="Search products"
+    >
+    <button type="button" onclick="searchProducts()">Search</button>
+  </div>
+</section>
 
-<main id="products"></main>
+<div class="categories">
+  <button class="category active" onclick="filterProducts('all', this)">All Products</button>
+  <button class="category" onclick="filterProducts('electronics', this)">Electronics</button>
+  <button class="category" onclick="filterProducts('fashion', this)">Fashion</button>
+  <button class="category" onclick="filterProducts('home', this)">Home</button>
+  <button class="category" onclick="filterProducts('other', this)">Others</button>
+</div>
+
+<main id="products">
+
+  <div class="section-title" id="deals">
+    <div>
+      <h2>🔥 Best Deals for You</h2>
+      <p>Explore products and compare prices.</p>
+    </div>
+  </div>
+
+  <div id="status" class="status" aria-live="polite">
+    Loading products...
+  </div>
+
+  <div id="productsList" class="products"></div>
+
+</main>
+
+<footer>
+  <h3>PRICE ALERT INDIA</h3>
+  <p>Compare prices. Find deals. Save money.</p>
+  <p>Product prices and offers may change on shopping websites.</p>
+  <p>© 2026 Price Alert India</p>
+</footer>
 
 <script>
-  const SUPABASE_URL = "https://wdkyywiwvqsevpcdzkze.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_ikyxc6KXCN5Nq6KPLgoStw_XLT8q2Z2";
+/*
+  IMPORTANT:
+  Replace the two values below with your actual Supabase
+  Project URL and Publishable Key.
+*/
 
-  
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-  let allProducts = [];
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
+const SUPABASE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
 
-  
-  async function loadProducts() {
-  const status = document.getElementById("status");
-  status.textContent = "பொருட்களை ஏற்றுகிறது...";
+let db = null;
+let allProducts = [];
+let activeCategory = "all";
+
+const statusElement = document.getElementById("status");
+const productsList = document.getElementById("productsList");
+
+function startApp() {
+  if (!window.supabase) {
+    statusElement.textContent =
+      "Supabase library could not load. Check your internet connection and reload the page.";
+    return;
+  }
+
+  if (
+    !SUPABASE_URL.startsWith("https://") ||
+    SUPABASE_URL.includes("PASTE_YOUR")
+  ) {
+    statusElement.textContent =
+      "Please add your actual Supabase Project URL in index.html.";
+    return;
+  }
+
+  if (
+    SUPABASE_KEY.includes("PASTE_YOUR") ||
+    !SUPABASE_KEY
+  ) {
+    statusElement.textContent =
+      "Please add your Supabase Publishable Key in index.html.";
+    return;
+  }
+
+  try {
+    db = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    loadProducts();
+  } catch (error) {
+    statusElement.textContent =
+      "Connection setup error: " + error.message;
+  }
+}
+
+async function loadProducts() {
+  statusElement.textContent = "Loading products...";
+  productsList.replaceChildren();
 
   try {
     const result = await Promise.race([
       db.from("products").select("*"),
       new Promise((_, reject) =>
         setTimeout(
-          () => reject(new Error("இணைப்பு தாமதமாகிறது. Supabase அமைப்பைச் சரிபார்க்கவும்.")),
-          12000
+          () => reject(
+            new Error("Connection timed out. Please check your Supabase settings.")
+          ),
+          15000
         )
       )
     ]);
 
-    const { data, error } = result;
+    if (result.error) {
+      throw result.error;
+    }
 
-    if (error) {
-      status.textContent = "பிழை: " + error.message;
+    allProducts = result.data || [];
+
+    if (allProducts.length === 0) {
+      statusElement.textContent =
+        "No products found. Add products to your Supabase products table.";
       return;
     }
 
-    allProducts = data || [];
+    statusElement.textContent = "";
     displayProducts(allProducts);
 
-    status.textContent = allProducts.length
-      ? allProducts.length + " பொருட்கள்"
-      : "இன்னும் பொருட்கள் சேர்க்கப்படவில்லை.";
-
   } catch (error) {
-    status.textContent = "பிழை: " + error.message;
-    console.error("Products loading error:", error);
+    console.error("Product loading error:", error);
+
+    statusElement.textContent =
+      "Unable to load products: " +
+      (error.message || "Please check your connection and Supabase settings.");
   }
-  }                                               
-  
-  function displayProducts(products) {
-    const container = document.getElementById("products");
-    container.replaceChildren();
-
-    products.forEach(product => {
-      const card = document.createElement("article");
-      card.className = "card";
-const image = document.createElement("img");
-
-
-
-
-      
-
-  
-} catch (error) {
-    status.textContent = "பிழை: " + error.message;
-    console.error("Products loading error:", error);
-  }
-  }                                               
-  
-  function displayProducts(products) {
-    const container = document.getElementById("products");
-    container.replaceChildren();
-
-    products.forEach(product => {
-      const card = document.createElement("article");
-      card.className = "card";
-const image = document.createElement("img");
-
-image.alt = product.product_name || "பொருள்";
-image.style.width = "100%";
-image.style.height = "180px";
-image.style.objectFit = "contain";
-image.style.marginBottom = "12px";
-
-
-      
-
-  
-
-image.style.objectFit = "contain";
-
-if (product.image_url) 
- console.log("Product:", product.name || product.product_name);
-console.log("Image URL:", product.image_url);
-  const productName = (product.product_name || "").toLowerCase();
-
-
-
-if (product.image_url) {
-  console.log("Product:", product.name || product.product_name);
-  console.log("Image URL:", product.image_url);
 }
 
-const productName = (
-  product.product_name || product.name || ""
-).toLowerCase();
-
-if (product.image_url) {
-  image.src = product.image_url;
-} else if (productName.includes("mouse")) {
-  image.src = "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400";
-} else if (productName.includes("headphone")) {
-  image.src = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
-} else {
-  image.src = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400";
-}
-
-card.appendChild(image);
-
-
-
-
-
-const name = document.createElement("h3");
-name.textContent = product.product_name || product.name || "பொருள்";
-
-card.appendChild(name);
-      
-      const price = document.createElement("p");
-      price.className = "price";
-
-      const currentPrice = Number(product.current_price);
-      const targetPrice = Number(product.target_price);
-
-      if (product.current_price != null &&
-          Number.isFinite(currentPrice)) {
-        price.textContent = "தற்போதைய விலை: ₹" + currentPrice;
-      } else {
-        price.textContent = "விலை விவரம் இல்லை";
-      }
-
-      if (product.target_price != null &&
-          Number.isFinite(targetPrice)) {
-        const target = document.createElement("p");
-        target.textContent = "நீங்கள் விரும்பும் விலை: ₹" + targetPrice;
-        card.appendChild(target);
-
-        if (Number.isFinite(currentPrice) &&
-            currentPrice <= targetPrice) {
-          const offer = document.createElement("p");
-          offer.className = "low";
-          offer.textContent = "🎉 உங்கள் இலக்கு விலையை அடைந்துள்ளது!";
-          card.appendChild(offer);
-        }
-      }
-
-      card.append(name, price);
-
-      if (product.product_url) {
-        try {
-          const linkUrl = new URL(product.product_url);
-          
-          if (linkUrl.protocol === "https:" ||
-              linkUrl.protocol === "http:") {
-            const link = document.createElement("a");
-            link.href = linkUrl.href;
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-            link.textContent = "பொருளைப் பார்க்க";
-            card.appendChild(link);
-          }
-        } catch (e) {
-          console.warn("தவறான பொருள் URL", product.url);
-        }
-      }
-
-      container.appendChild(card);
-    });
+function getValue(product, keys) {
+  for (const key of keys) {
+    if (
+      product[key] !== undefined &&
+      product[key] !== null &&
+      product[key] !== ""
+    ) {
+      return product[key];
+    }
   }
 
-  document.getElementById("search").addEventListener("input", event => {
-    const query = event.target.value.toLowerCase();
+  return null;
+}
 
-    displayProducts(
-      allProducts.filter(product =>
-        String(product.product_name || "")
-          .toLowerCase()
-          .includes(query)
-      )
-    );
+function formatPrice(value) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) {
+    return null;
+  }
+
+  return "₹" + number.toLocaleString("en-IN", {
+    maximumFractionDigits: 2
+  });
+}
+
+function displayProducts(products) {
+  productsList.replaceChildren();
+
+  const filteredProducts = products.filter(product => {
+    const name = String(
+      getValue(product, ["product_name", "name", "title"]) || ""
+    ).toLowerCase();
+
+    const category = String(
+      getValue(product, ["category", "type"]) || "other"
+    ).toLowerCase();
+
+    const query = document.getElementById("searchInput")
+      .value.trim().toLowerCase();
+
+    const matchesSearch = name.includes(query);
+
+    const matchesCategory =
+      activeCategory === "all" ||
+      category.includes(activeCategory);
+
+    return matchesSearch && matchesCategory;
   });
 
-  document.getElementById("productForm").addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const status = document.getElementById("status");
-
-  const newProduct = {
-    product_name: document.getElementById("productName").value.trim(),
-    product_url: document.getElementById("productUrl").value.trim(),
-    current_price: Number(document.getElementById("currentPrice").value),
-    target_price: Number(document.getElementById("targetPrice").value)
-  };
-
-  status.textContent = "பொருளைச் சேமிக்கிறது...";
-
-  const { error } = await db
-    .from("products")
-    .insert([newProduct]);
-
-  if (error) {
-    status.textContent = "பிழை: " + error.message;
-    console.error(error);
+  if (filteredProducts.length === 0) {
+    statusElement.textContent = "No matching products found.";
     return;
   }
 
-  document.getElementById("productForm").reset();
-  await loadProducts();
-  status.textContent = "பொருள் வெற்றிகரமாகச் சேர்க்கப்பட்டது!";
-});
-    
-  if (
-    SUPABASE_URL.startsWith("https://") &&
-    SUPABASE_KEY
-  ) {
-    loadProducts();
-  } else {
-    document.getElementById("status").textContent =
-      "Supabase URL அல்லது Key-ஐ சரிபார்க்கவும்.";
-  }
-  loadProducts();
+  statusElement.textContent =
+    "Showing " + filteredProducts.length + " product(s).";
+
+  filteredProducts.forEach(product => {
+    const name = getValue(
+      product,
+      ["product_name", "name", "title"]
+    ) || "Product";
+
+    const currentPrice = getValue(
+      product,
+      ["current_price", "current price", "price"]
+    );
+
+    const targetPrice = getValue(
+      product,
+      ["target_price", "target price"]
+    );
+
+    const oldPrice = getValue(
+      product,
+      ["original_price", "original price", "mrp"]
+    );
+
+    const imageUrl = getValue(
+      product,
+      ["image_url", "image", "imageurl"]
+    );
+
+    const productUrl = getValue(
+      product,
+      ["product_url", "url", "link"]
+    );
+
+    const priceNumber = Number(currentPrice);
+    const oldPriceNumber = Number(oldPrice);
+
+    const hasCurrentPrice =
+      currentPrice !== null &&
+      Number.isFinite(priceNumber);
+
+    let discount = 0;
+
+    if (
+      oldPrice !== null &&
+      Number.isFinite(oldPriceNumber) &&
+      oldPriceNumber > priceNumber &&
+      hasCurrentPrice
+    ) {
+      discount = Math.round(
+        (oldPriceNumber - priceNumber) / oldPriceNumber * 100
+      );
+    }
+
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const imageArea = document.createElement("div");
+    imageArea.className = "image-area";
+
+    if (discount > 0) {
+      const badge = document.createElement("span");
+      badge.className = "discount";
+      badge.textContent = discount + "% OFF";
+      imageArea.appendChild(badge);
+    }
+
+    if (imageUrl) {
+      const image = document.createElement("img");
+      image.className = "product-image";
+      image.alt = String(name);
+      image.loading = "lazy";
+      image.src = String(imageUrl);
+
+      image.onerror = function() {
+        this.style.display = "none";
+      };
+
+      imageArea.appendChild(image);
+    } else {
+      const placeholder = document.createElement("span");
+      placeholder.textContent = "🛍️";
+      placeholder.style.fontSize = "55px";
+      imageArea.appendChild(placeholder);
+    }
+
+    const body = document.createElement("div");
+    body.className = "card-body";
+
+    const title = document.createElement("h3");
+    title.textContent = String(name);
+    body.appendChild(title);
+
+    const priceRow = document.createElement("div");
+
+    const price = document.createElement("span");
+    price.className = "price";
+    price.textContent = hasCurrentPrice
+      ? formatPrice(currentPrice)
+      : "Price unavailable";
+
+    priceRow.appendChild(price);
+
+    if (
+      oldPrice !== null &&
+      Number.isFinite(oldPriceNumber) &&
+      oldPriceNumber > priceNumber &&
+      hasCurrentPrice
+    ) {
+      const old = document.createElement("span");
+      old.className = "old-price";
+      old.textContent = formatPrice(oldPrice);
+      priceRow.appendChild(old);
+    }
+
+    body.appendChild(priceRow);
+
+    if (discount > 0) {
+      const saving = document.createElement("div");
+      saving.className = "saving";
+      saving.textContent = "You save " +
+        formatPrice(oldPriceNumber - priceNumber);
+
+      body.appendChild(saving);
+    }
+
+    if (targetPrice !== null) {
+      const target = document.createElement("div");
+      target.className = "target";
+      target.textContent = "Target price: " +
+        (formatPrice(targetPrice) || "Not available");
+
+      body.appendChild(target);
+    }
+
+    const buy = document.createElement("a");
+    buy.className = "buy-button";
+    buy.textContent = "Buy Now";
+
+    if (productUrl) {
+      try {
+        const parsedUrl = new URL(String(productUrl));
+
+        if (
+          parsedUrl.protocol === "https:" ||
+          parsedUrl.protocol === "http:"
+        ) {
+          buy.href = parsedUrl.href;
+          buy.target = "_blank";
+          buy.rel = "noopener noreferrer";
+        } else {
+          buy.href = "#";
+          buy.addEventListener("click", event => event.preventDefault());
+        }
+      } catch {
+        buy.href = "#";
+        buy.addEventListener("click", event => event.preventDefault());
+      }
+    } else {
+      buy.href = "#";
+      buy.addEventListener("click", event => event.preventDefault());
+    }
+
+    body.appendChild(buy);
+    card.appendChild(imageArea);
+    card.appendChild(body);
+    productsList.appendChild(card);
+  });
+}
+
+function searchProducts() {
+  displayProducts(allProducts);
+}
+
+function filterProducts(category, button) {
+  activeCategory = category;
+
+  document.querySelectorAll(".category").forEach(item => {
+    item.classList.remove("active");
+  });
+
+  button.classList.add("active");
+  displayProducts(allProducts);
+}
+
+document.getElementById("searchInput").addEventListener(
+  "input",
+  searchProducts
+);
+
+startApp();
 </script>
+
 </body>
 </html>
