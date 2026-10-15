@@ -654,7 +654,84 @@ const flipkartUrl = getValue(product, ["flipkart_url"]);
     }
 
     body.appendChild(priceRow);
+    
+// Amazon and Flipkart price comparison
+const compareBox = document.createElement("div");
+compareBox.style.marginTop = "12px";
+compareBox.style.padding = "10px";
+compareBox.style.borderRadius = "10px";
+compareBox.style.background = "#f3f7ff";
 
+const comparisonTitle = document.createElement("h4");
+comparisonTitle.textContent = "Compare Prices";
+comparisonTitle.style.margin = "0 0 8px";
+compareBox.appendChild(comparisonTitle);
+
+function addStorePrice(storeName, storePrice, storeUrl) {
+  if (storePrice === null || storePrice === undefined || storePrice === "") {
+    return;
+  }
+
+  const row = document.createElement("div");
+  row.style.marginBottom = "8px";
+
+  const amount = Number(storePrice);
+  const label = document.createElement("span");
+
+  label.textContent = storeName + ": " +
+    (Number.isFinite(amount) ? formatPrice(amount) : "Price unavailable");
+
+  row.appendChild(label);
+
+  if (storeUrl) {
+    try {
+      const parsed = new URL(String(storeUrl));
+
+      if (parsed.protocol === "https:" || parsed.protocol === "http:") {
+        const link = document.createElement("a");
+        link.href = parsed.href;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = " Visit store";
+        link.style.marginLeft = "6px";
+        row.appendChild(link);
+      }
+    } catch (error) {
+      console.log("Invalid store URL:", storeName);
+    }
+  }
+
+  compareBox.appendChild(row);
+}
+
+addStorePrice("Amazon", amazonPrice, amazonUrl);
+addStorePrice("Flipkart", flipkartPrice, flipkartUrl);
+
+const validPrices = [
+  { name: "Amazon", price: Number(amazonPrice), url: amazonUrl },
+  { name: "Flipkart", price: Number(flipkartPrice), url: flipkartUrl }
+].filter(item =>
+  item.price > 0 &&
+  Number.isFinite(item.price) &&
+  item.url
+);
+
+if (validPrices.length > 0) {
+  validPrices.sort((a, b) => a.price - b.price);
+
+  const lowest = document.createElement("div");
+  lowest.textContent = "Lowest price: " +
+    validPrices[0].name + " - " +
+    formatPrice(validPrices[0].price);
+
+  lowest.style.fontWeight = "bold";
+  lowest.style.color = "#087443";
+  lowest.style.marginTop = "8px";
+
+  compareBox.appendChild(lowest);
+}
+
+body.appendChild(compareBox);
     if (discount > 0) {
       const saving = document.createElement("div");
       saving.className = "saving";
